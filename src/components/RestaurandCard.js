@@ -5,14 +5,14 @@ const RestroCard = (props) => {
     
     return(<div className='res-card'>
             <div className='card-img'>
-                    <img src={CDN_URL+logoImageKey} alt= "veg biriyani"/>
+                    <img src={CDN_URL+logoImageKey} alt= "food img"/>
             </div>
             <div className='card-content'>
-                    <h3>{name}</h3>
-                    <h5>{cuisines.join(",")}</h5>
-                    <h5>Rating : {rating.score}</h5>
-                    <h5>Cost: {price}</h5>
-                    <p>{delivery.tag}</p>
+                    <h3 className="ellipsis">{name}</h3>
+                    <h5 className="ellipsis">{cuisines.join(",")}</h5>
+                    <h5 className="ellipsis">Rating : {rating.score}</h5>
+                    <h5 className="ellipsis">Cost: {price}</h5>
+                    <p className="ellipsis">{delivery.tag}</p>
             </div>
             <div className='banner'>{tag}</div>
     </div>)

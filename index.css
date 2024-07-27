@@ -39,12 +39,12 @@
     padding: 15px 5px;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 2rem;
 }
 .res-card{
     width: 20%;
     height: 10%;
     background-color: ivory;
-    padding: 10px;
     border-radius: 0.5rem;
     margin: 5px;
     position: relative;
@@ -68,7 +68,18 @@
 }
 
 .card-content{
-    line-height: 0;
+    margin: 10px;
+    width: 90%; /* Set a specific width for the element */
+    
+}
+.ellipsis {
+    white-space: nowrap; /* Prevents text from wrapping */
+    overflow: hidden; /* Hides any overflowed text */
+    text-overflow: ellipsis; /* Adds the ellipsis (...) */
+    display: block; /* Ensures the element is block-level */
+    width: 100%; /* Ensures the element fills the container width */
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .banner{
@@ -85,12 +96,53 @@
     display: flex;
     justify-content: center;
     /* margin-top: 90px; */
+    margin-right: 2px;
 }
 
 .search > input{
     width: 80%;
-    height: 3rem;
-    border-radius: 0.5rem;
+    height: 1rem;
+    border-radius: 0.2rem;
     border: 1px solid black;
-    text-align: center;
+}
+
+.shimmer-container{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: aliceblue;
+    justify-content: space-evenly;
+}
+
+.shimmer-card{
+    border-radius: 0.5rem;
+    width: 200px;
+    height: 200px;
+    margin: 1rem;
+    border: 1px solid grey;
+    background-color: #f0f0f0;
+}
+
+.shimmer-img{
+    width: 95%;
+    height: 40%;
+    border-radius: 0.5rem;
+    margin: 5px;
+    background-color: lightgrey;
+}
+.shimmer-content{
+    padding: 10px;
+    overflow: hidden;
+    height: 60%;
+}
+
+.shimmer-text{
+    background-color: lightgray;
+    width: 100%;
+    height: 10px;
+}
+
+.filter{
+    display: flex;
+    width: 50%;
 }
