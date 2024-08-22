@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import RestroCard from "./RestaurandCard";
 import Shimmer from "./Shimmer";
+import { BASE_URL } from "../utils/constants";
+import { Link } from "react-router-dom";
 
 const Body = () => {
     const [listOfRestaurant, setListOfRestaurant] = useState([]);
@@ -22,16 +24,29 @@ const Body = () => {
 
     const fetchData = async () => {
         try{
+            //https://www.zomato.com/webapi/searchapi.php?city=57
             //const responseData = await fetch('https://www.zomato.com/webroutes/getPage?page_url=/abudhabi/restaurants/in/madinat-zayed-restaurants');
-            const responseData = await fetch('https://food.noon.com/_svc/mp-food-api-catalog/api/');
+            //card section has info link, nav section in info link has order link
+            //https://www.zomato.com/webroutes/getPage?page_url=/abudhabi/maharani-dawat-indian-cuisine-restaurant-al-markaziya/order
+            //https://www.zomato.com/webroutes/getPage?page_url=/abudhabi/maharani-dawat-indian-cuisine-restaurant-al-markaziya/info
+            //const responseData = await fetch('https://food.noon.com/_svc/mp-food-api-catalog/api/');
+            //const responseData = await fetch(`${BASE_URL}abudhabi/restaurants/in/mussafah-sanaiya-restaurants`);
+            const responseData = await fetch(`https://www.zomato.com/webroutes/getPage?page_url=/abudhabi/restaurants/`);
             if (responseData.ok) {
-                console.log('Request succeeded:', responseData);
                 const jsonData = await responseData.json();
-                setListOfRestaurant(jsonData?.results?.slice(9));
-                setFilteredData(listOfRestaurant);
-                console.log(jsonData.results.slice(9));
+
+                //console.log(jsonData?.page_data?.sections?.SECTION_SEARCH_RESULT?.slice(1))
+                var resultArray = jsonData?.page_data?.sections?.SECTION_SEARCH_RESULT?.slice(1);
+                console.log("Result array");
+                console.log(resultArray);
+                setListOfRestaurant(resultArray);
+                console.log("listof res")
+                console.log(listOfRestaurant);
+                console.log("filtered list")
+                setFilteredData(resultArray);
+                console.log(filteredData);
             } else {
-                console.error('Request failed:', responseData.status);
+                console.error('Request failed:', responseData);
             }
         }
         catch(ex){
@@ -58,7 +73,11 @@ const Body = () => {
                      
                      <div className='res-container'>
                             {
-                             filteredData.map((obj)=> <RestroCard key={obj.restaurantCode} resObj = {obj}/>)
+                             filteredData.map((obj)=> {
+                                const resName = obj.cardAction.clickUrl.split('/')[2];
+                                return  <Link className='res-link' key={obj.info.resId} to={"/restaurant/"+resName+"/order"}><RestroCard resObj = {obj}/></Link>
+                             }
+                            )
                             }
                      </div>
             </div>
