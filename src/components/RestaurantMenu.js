@@ -1,61 +1,65 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import useRestaurantMenu from '../utils/useRestaurantMenu';
+import RestaurantSubMenu from './RestaurantSubMenu';
 import Shimmer from "./Shimmer";
-import { MENU_URL } from '../utils/constants';
 import {useParams} from "react-router-dom";
 
 const RestaurantMenu = () => {
-    const [menuList, setMenuList] = useState(null);
-    const [resDetails, setResDetails] = useState(null);
+    // const [menuList, setMenuList] = useState(null);
+    // const [resDetails, setResDetails] = useState(null);
     const {resId} = useParams();
-    //console.log(resId);
+    const {resDetails,menuList} = useRestaurantMenu(resId);
+    const [subMenu, setSubMenu] = useState([])
+    const [menuSelected, setMenuSelected] = useState(null)
 
     useEffect(()=>{
-        fetchMenu();
-    },[]);
-
-    const fetchMenu = async () => {
-        try{
-            const menu_url = MENU_URL.replace(':resId',resId)
-            console.log(menu_url)
-            const data = await fetch("https://www.zomato.com/webroutes/getPage?page_url=/abudhabi/punjab-highway-restaurant-tourist-club-area-al-zahiyah/order");
-            const jsonData = await data.json();
-            setMenuList(jsonData.page_data.order.menuList.menus);
-            setResDetails(jsonData.page_data.sections)
-           // console.log(jsonData.page_data.order);
-            // console.log(jsonData.page_data.sections);
-            
+        if(menuList!=null){
+            let result = menuList.map((obj,index)=>{
+                const {categories} = obj.menu
+                const items = categories.map((ct)=>ct.category.items).flat();
+                
+                return { menuId: obj.menu.id, menuName: obj.menu.name, items: items };
+            })
+            setSubMenu(result);
+            //setMenuSelected(subMenu[0]?.items)
         }
-        catch(ex){
-            console.log(ex)
+       
+    },[menuList])
+
+
+    useEffect(()=>{
+        const menuSelected = subMenu[0]?.items
+        setMenuSelected(subMenu[0])
+    },[subMenu])
+
+    const handleMenuClick = (e)=>{
+        const value=e.target.textContent;
+        const selectedMenu = subMenu.find(item => item.menuName === value);
+    
+        if (selectedMenu) {
+            setMenuSelected(selectedMenu);
         }
     }
-    return menuList==null? (<Shimmer/>):
 
-    (<div>
-        <h1>{resDetails.SECTION_BASIC_INFO.name}</h1>
-        <p>{resDetails.SECTION_BASIC_INFO.cuisine_string}</p>
-        <p>{resDetails.SECTION_RES_CONTACT.locality_verbose}</p>
-        <h1>Menu</h1>
-        <ul>
-            {
-                menuList.map((obj,index)=>{
-                    const {categories} = obj.menu
-                    const items = categories.map((ct)=>ct.category.items).flat();
-                   // console.log("items: ",items[0].item.max_price);
-                //    console.log("first item: ",items[0]);
-                   
-                /* {console.log(obj.menu.name+" --- "+obj.menu.categories.map((obj)=>{console.log(obj.category.items)}))} */
-                console.log(obj.menu.id);
-                    return (
-                        <>
-                            <h4>{obj.menu.name}</h4>
-                            <ul key={obj.menu.id}>
-                                 {items.map((item) => <li>{item.item.name}-{item.item.max_price} AED</li>)} 
-                            </ul>
-                        </>
-                )})
-            }
-        </ul>
+    return menuList==null || subMenu.length==0? (<Shimmer/>):
+
+    (<div className='font-[Okra, Helvetica, sans-serif]'>
+        <h1 className='text-black font-[500] text-[3.6rem]'>{resDetails.SECTION_BASIC_INFO.name}</h1>
+        <p className='text-[#828282] font-[300] text-[1.6rem]'>{resDetails.SECTION_BASIC_INFO.cuisine_string}</p>
+        <p className='text-[1.6rem] text-[#9C9C9C]'>{resDetails.SECTION_RES_CONTACT.locality_verbose}</p>
+        <h1>Menu</h1><br></br>
+        <hr></hr>
+        <div className='flex justify-between items-start m-8'>
+            <section className='p-4 w-[40%]'>
+                {subMenu.map((obj)=>{
+                    return(
+                     <h1 onClick={(e)=>{handleMenuClick(e)}} className='p-4 text-[1.5rem]' key={obj.menuId}>{obj.menuName}</h1>)
+                })}
+            </section>
+            <section className='border-l-2 border-gray-500 ml-4 p-4 w-[60%]'>
+                 {<RestaurantSubMenu menu={menuSelected}/>}
+            </section>
+        </div>
     </div>)
 }
 

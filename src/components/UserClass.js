@@ -1,4 +1,37 @@
-// import React from "react";
+import React from "react";
+
+
+export default class UserClass extends React.Component{
+    debugger;
+    constructor(props){
+           super(props)
+           console.log(this.props)
+    }
+
+    componentDidMount(){
+        console.log(this.props.name+" child component did mount")
+    }
+
+    componentDidUpdate(){
+        console.log(" child component did update")
+    }
+
+    componentWillUnmount(){
+        console.log(" child component will unmount")
+    }
+
+    render(){
+        const {name,location,avatar_url} = this.props.userInfo;
+        return(
+        <div className="user-card">
+            <img src={avatar_url}/>
+             <h4>Name : {name}</h4>
+             <h4>Location : {location}</h4>
+             <h5>Contact : @roopashetty</h5>
+        </div>     
+        )
+    }
+}
 
 // export default class UserClass extends React.Component{
 //     constructor(props){

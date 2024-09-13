@@ -1,9 +1,14 @@
-.header{
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* .header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: 1px solid wheat;
-    height: 70px;
+    height: 30%;
     padding: 0px 5px 5px 5px;
     width: 100%;
     background-color: white;
@@ -75,7 +80,7 @@
 
 .card-content{
     margin: 10px;
-    width: 90%; /* Set a specific width for the element */
+    width: 90%; 
     
 }
 .restroNameHeading{
@@ -95,9 +100,7 @@
     text-align: center;
 }
 .restroSubTiles{
- /*   display: flex;
-    justify-content: space-between;
-    align-items: center;*/
+ 
     color: rgb(105, 105, 105);
     font-size: 1.2rem;
     gap: 1rem;
@@ -110,11 +113,11 @@
     align-items: center;
 }
 .ellipsis {
-    white-space: nowrap; /* Prevents text from wrapping */
-    overflow: hidden; /* Hides any overflowed text */
-    text-overflow: ellipsis; /* Adds the ellipsis (...) */
-    display: block; /* Ensures the element is block-level */
-    width: 100%; /* Ensures the element fills the container width */
+    white-space: nowrap; /* Prevents text from wrapping /
+    overflow: hidden; /* Hides any overflowed text /
+    text-overflow: ellipsis; /* Adds the ellipsis (...) /
+    display: block; /* Ensures the element is block-level /
+    width: 100%; /* Ensures the element fills the container width /
     margin-top: 8px;
     margin-bottom: 8px;
 }
@@ -126,9 +129,9 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-   /* background-color: green;*/
+   /* background-color: green;/
     border-radius: 0.2rem;
-/*    color: white; */
+/*    color: white; /
     padding: 0.2rem;
     color: rgb(255, 211, 133);
     background:linear-gradient(90deg, rgb(12, 14, 17) 0%, rgb(12, 14, 17) 25%, rgb(12, 14, 17) 50%, rgba(12, 14, 17, 0.8) 80%, rgba(12, 14, 17, 0) 100%);
@@ -137,7 +140,6 @@
 .search{
     display: flex;
     justify-content: center;
-    /* margin-top: 90px; */
     margin-right: 2px;
 }
 
@@ -192,4 +194,4 @@
 .user-card{
     border: 1px solid black;
     padding: 1rem;
-}
+} */

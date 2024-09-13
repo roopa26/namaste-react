@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import RestroCard from "./RestaurandCard";
+import RestroCard,{withPromotedRestaurantCard, withGoldDiscount} from "./RestaurandCard";
 import Shimmer from "./Shimmer";
 import { BASE_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
     const [listOfRestaurant, setListOfRestaurant] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [searchText,setSearchText] = useState("");
+    const onlineStatus = useOnlineStatus();
+    const PromotedRestaurantCard = withPromotedRestaurantCard(RestroCard);
+
     const handleBtnClick = ()=>{
         const filteredData = listOfRestaurant.filter((res)=> res.rating.score > 4.4)
         setFilteredData(filteredData)
@@ -37,14 +41,8 @@ const Body = () => {
 
                 //console.log(jsonData?.page_data?.sections?.SECTION_SEARCH_RESULT?.slice(1))
                 var resultArray = jsonData?.page_data?.sections?.SECTION_SEARCH_RESULT?.slice(1);
-                console.log("Result array");
-                console.log(resultArray);
                 setListOfRestaurant(resultArray);
-                console.log("listof res")
-                console.log(listOfRestaurant);
-                console.log("filtered list")
                 setFilteredData(resultArray);
-                console.log(filteredData);
             } else {
                 console.error('Request failed:', responseData);
             }
@@ -55,6 +53,8 @@ const Body = () => {
         
         
     }
+
+    if(onlineStatus === false) return <h1>Looks like you are offline. Please check your internet connection</h1>
 
     return listOfRestaurant.length === 0?(
             <Shimmer/>
@@ -69,13 +69,14 @@ const Body = () => {
                      <div>
                         <button onClick={handleBtnClick}>Top rated Restaurant</button>
                      </div>
-                </div>
-                     
-                     <div className='res-container'>
+                </div>       
+                     <div className='w-full flex flex-wrap justify-center'>
                             {
                              filteredData.map((obj)=> {
                                 const resName = obj.cardAction.clickUrl.split('/')[2];
-                                return  <Link className='res-link' key={obj.info.resId} to={"/restaurant/"+resName+"/order"}><RestroCard resObj = {obj}/></Link>
+                                return <Link className="m-2 w-1/5 h-[450px]" key={obj?.info?.resId} to={"/restaurant/"+resName+"/order"}>
+                                        {obj.isPromoted? <PromotedRestaurantCard resObj = {obj}/> : <RestroCard resObj = {obj}/>}
+                                       </Link>
                              }
                             )
                             }

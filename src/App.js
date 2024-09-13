@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{lazy, Suspense, useEffect, useState}  from 'react';
 import ReactDOM from 'react-dom/client';
 import Header from './components/Header';
 import Body from './components/Body';
@@ -7,13 +7,24 @@ import About from './components/About';
 import Contact from './components/Contact';
 import ErrorPage from './components/ErrorPage';
 import RestaurantMenu from './components/RestaurantMenu';
+import { Suspense } from 'react';
+import userContext from './utils/UserContext';
 
 const AppLayout = () =>{
+const [userName, setUserName] = useState("");
+        useEffect(()=>{
+                setUserName("Roopa Lokesha Shetty")
+        },[]);
+
         return(<div className='app'>
-                 <Header/>
+                <userContext.Provider value={{loggedInUser:userName}}>
+                        <Header/>
+                </userContext.Provider>
                 <Outlet/>
          </div>)
  }
+
+ const Grocery = lazy(()=> import("./components/Grocery"))
  
 const route = createBrowserRouter([
         {
@@ -35,6 +46,10 @@ const route = createBrowserRouter([
                         {
                                 path:"/restaurant/:resId/order",
                                 element:<RestaurantMenu/>                     
+                        },
+                        {
+                                path: "/grocery",
+                                element:<Suspense fallback={<h1>Loading....</h1>}><Grocery/></Suspense>
                         }
                 ],
                 errorElement:<ErrorPage/>      
