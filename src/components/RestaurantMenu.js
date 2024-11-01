@@ -43,20 +43,20 @@ const RestaurantMenu = () => {
 
     return menuList==null || subMenu.length==0? (<Shimmer/>):
 
-    (<div className='font-[Okra, Helvetica, sans-serif]'>
+    (<div className='font-[Okra, Helvetica, sans-serif] m-10'>
         <h1 className='text-black font-[500] text-[3.6rem]'>{resDetails.SECTION_BASIC_INFO.name}</h1>
         <p className='text-[#828282] font-[300] text-[1.6rem]'>{resDetails.SECTION_BASIC_INFO.cuisine_string}</p>
         <p className='text-[1.6rem] text-[#9C9C9C]'>{resDetails.SECTION_RES_CONTACT.locality_verbose}</p>
         <h1>Menu</h1><br></br>
         <hr></hr>
-        <div className='flex justify-between items-start m-8'>
-            <section className='p-4 w-[40%]'>
+        <div className='flex justify-center  items-start mt-10 h-full'>
+            <section className='p-4 w-[20%] cursor-pointer border-2  ml-6rem  border-gray-500 bg-slate-400 text-white sticky top-20'>
                 {subMenu.map((obj)=>{
                     return(
-                     <h1 onClick={(e)=>{handleMenuClick(e)}} className='p-4 text-[1.5rem]' key={obj.menuId}>{obj.menuName}</h1>)
+                     <h1 onClick={(e)=>{handleMenuClick(e)}} className='p-2 text-[1.2rem]' key={obj.menuId}>{obj.menuName}</h1>)
                 })}
             </section>
-            <section className='border-l-2 border-gray-500 ml-4 p-4 w-[60%]'>
+            <section className='ml-11 h-full flex flex-wrap border-black pl-6'>
                  {<RestaurantSubMenu menu={menuSelected}/>}
             </section>
         </div>

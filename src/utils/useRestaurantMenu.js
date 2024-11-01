@@ -13,8 +13,9 @@ const useRestaurantMenu = (resId) => {
     const fetchMenu = async () => {
         try{
             const menu_url = MENU_URL.replace(':resId',resId)
-            console.log(menu_url)
-            const data = await fetch("https://www.zomato.com/webroutes/getPage?page_url=/abudhabi/punjab-highway-restaurant-tourist-club-area-al-zahiyah/order");
+           // console.log(menu_url)
+           const data = await fetch(menu_url);
+            // const data = await fetch("https://www.zomato.com/webroutes/getPage?page_url=/abudhabi/punjab-highway-restaurant-tourist-club-area-al-zahiyah/order");
             const jsonData = await data.json();
             setMenuList(jsonData.page_data.order.menuList.menus);
             setResDetails(jsonData.page_data.sections)
