@@ -195,3 +195,17 @@
     border: 1px solid black;
     padding: 1rem;
 } */
+
+@media screen and (max-width:800px){
+    .subMenuSection{
+        width: 100%;
+    }
+
+    .restroSubMenu{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+    }
+}

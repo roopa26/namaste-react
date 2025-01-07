@@ -9,6 +9,7 @@ import ErrorPage from './components/ErrorPage';
 import RestaurantMenu from './components/RestaurantMenu';
 import { Suspense } from 'react';
 import userContext from './utils/UserContext';
+import deviceType from './utils/CheckDeviceType';
 import appStore from './utils/appStore';
 import {Provider} from 'react-redux';
 import Cart from './components/Cart';
@@ -17,13 +18,14 @@ const AppLayout = () =>{
 const [userName, setUserName] = useState("");
         useEffect(()=>{
                 setUserName("Roopa Lokesha Shetty")
+                console.log("parent App.js")
         },[]);
 
         return(
         <Provider store = {appStore}>
                 <div className='app'>
                 <userContext.Provider value={{loggedInUser:userName}}>
-                        <Header/>
+                <Header/>
                 </userContext.Provider>
                 <Outlet/>
          </div>

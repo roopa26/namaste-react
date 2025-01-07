@@ -9,6 +9,6 @@
 
 test("test should return sum of 2 numbers", () => {
     let result = Sum(3,4);
-    expect(1).toBe(1);
+    expect(result).toBe(7);
   });
   

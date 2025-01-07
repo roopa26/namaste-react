@@ -1,4 +1,4 @@
-import { CDN_URL } from "../utils/constants";
+import React from "react";
 
 const RestroCard = (props) => {
 //     const {name,cuisine,ratingNew,cfo, delivery,image,tag} = props.resObj;

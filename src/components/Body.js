@@ -18,12 +18,13 @@ const Body = () => {
     }
 
     const handleSearchClick = () =>{
-        const filterData = listOfRestaurant.filter((item)=>item.name.toLowerCase().includes(searchText.toLowerCase()));
+        const filterData = listOfRestaurant.filter((item)=>item.info.name.toLowerCase().includes(searchText.toLowerCase()));
         setFilteredData(filterData)
     }
 
     useEffect(()=>{
         fetchData();
+        console.log("body,js")
     },[])
 
     const fetchData = async () => {
@@ -74,6 +75,7 @@ const Body = () => {
                             {
                              filteredData.map((obj)=> {
                                 const resName = obj.cardAction.clickUrl.split('/')[2];
+                                //console.log(obj);
                                 return <Link className="m-2 w-1/5 h-[450px]" key={obj?.info?.resId} to={"/restaurant/"+resName+"/order"}>
                                         {obj.isPromoted? <PromotedRestaurantCard resObj = {obj}/> : <RestroCard resObj = {obj}/>}
                                        </Link>

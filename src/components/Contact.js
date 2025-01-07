@@ -1,11 +1,15 @@
-import { useEffect } from "react";
+import React from "react";
 
 const Contact = () => {
-    useEffect(async ()=>{
-        console.log("hello")
-    },[])
+
     return(<div>
-        This is contact us page
+        <h1 className="text-3xl">This is contact us page</h1>
+        <form>
+            <input type="input" className="p-2 m-2 border border-b-2 border-black" placeholder="Name"/>
+            <input type="input" className="p-2 m-2 border border-b-2 border-black" placeholder="Message"/>
+            <button className="p-2 m-4 border border-b-2 border-black bg-slate-200">Submit</button>
+        </form>
+        
     </div>)
 }
 
